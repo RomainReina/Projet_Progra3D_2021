@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         MovePlayer();
+        JumpPlayer();
     }
 
     private void MovePlayer()
@@ -36,7 +37,7 @@ public class PlayerController : MonoBehaviour
         float horizontalAxis = Input.GetAxis("Horizontal");
         float verticalAxis = Input.GetAxis("Vertical");
 
-        if (horizontalAxis > 0.05f || verticalAxis > 0.05f )
+        if (horizontalAxis > 0.05f || verticalAxis > 0.05f ||horizontalAxis < 0.05f || verticalAxis < 0.05f )
         {
             // cache calcule des vecteurs avant et Droit
             Vector3 cameraRight = cameraTransform.right;
@@ -51,6 +52,12 @@ public class PlayerController : MonoBehaviour
             deltaPosition.Normalize();
             playerRigidbody.MovePosition(playerRigidbody.position + deltaPosition * movementSpeed);
         }
+    }
+
+    private void JumpPlayer()
+    {
+        if(Input.GetButton("Jump"))
+            Debug.Log("jump");
     }
 
     private void MoveCamera()

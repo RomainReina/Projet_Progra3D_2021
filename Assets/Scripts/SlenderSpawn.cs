@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 using Random = System.Random;
 
@@ -15,14 +16,28 @@ public class SlenderSpawn : MonoBehaviour
      */
 
     [SerializeField] private GameObject prefabSlender;
+    [SerializeField] private GameObject terrain;
+
     //[SerializeField]  nbObject 
 
-    [SerializeField] private float timer = 15f;
+    [SerializeField] private float timer = 1f;
     private float updatedTimer;
+
+    private float Xmax;
+    private float Xmin;
+    private float Zmax;
+    private float Zmin;
+    private float X;
+    private float Z;
+
+    private TerrainCollider _terrainCollider;
+    
 
     private void Awake()
     {
         updatedTimer = timer;
+        _terrainCollider = terrain.GetComponent<TerrainCollider>();
+
     }
 
     void Update()
@@ -37,13 +52,43 @@ public class SlenderSpawn : MonoBehaviour
             updatedTimer -= Time.deltaTime;
         }
     }
-    
+
 
     private void SlenderSpawnRaycast()
     {
-        RaycastHit raycastHit;
-        Physics.Raycast(Vector3.Normalize(), transform.TransformDirection(Vector3.up));
+        // choisi une pos sur le board
+        Vector3 newPos = RandomPos();
+        Debug.Log(newPos);
         
+        //on regarde si le slender peux spawn à cette pos, puis on le fait  spawn
+        RaycastHit hit;
+
+        Debug.DrawRay(terrain.transform.position, transform.up * 10, Color.red);
+
+        if (Physics.Raycast(terrain.transform.position, transform.up, out hit, 10))
+        {
+            Instantiate(prefabSlender);
+        }
+        
+
     }
+
+    private Vector3 RandomPos()
+    {
+        Xmax = _terrainCollider.bounds.max.x;
+        Xmin = _terrainCollider.bounds.min.x;
+        
+        Zmax = _terrainCollider.bounds.max.z;
+        Zmin = _terrainCollider.bounds.min.z;
+
+        X = UnityEngine.Random.Range(Xmin,Xmax);
+        Z = UnityEngine.Random.Range(Zmin,Zmax);
+
+        return new Vector3(X, 0, Z);
+    }
+
+
 }
+
+
 
