@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class SceneController : MonoBehaviour
 {
-    [SerializeField] private UnityEvent onStartEvent = default;
     [SerializeField] private string nextScene;
     
 

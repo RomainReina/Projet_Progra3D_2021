@@ -58,16 +58,16 @@ public class SlenderSpawn : MonoBehaviour
     {
         // choisi une pos sur le board
         Vector3 newPos = RandomPos();
-        Debug.Log(newPos);
+        Debug.Log("new Pos SlenderPawn:" + newPos);
         
         //on regarde si le slender peux spawn à cette pos, puis on le fait  spawn
         RaycastHit hit;
 
-        Debug.DrawRay(terrain.transform.position, transform.up * 10, Color.red);
-
-        if (Physics.Raycast(terrain.transform.position, transform.up, out hit, 10))
+        if (Physics.Raycast(newPos, transform.up, out hit, 1000))
         {
-            Instantiate(prefabSlender);
+            newPos = new Vector3(newPos.x, hit.transform.position.y + 2, newPos.z);
+            Debug.Log("Swpan Slender");
+            Instantiate(prefabSlender,newPos,Quaternion.identity);
         }
         
 
@@ -84,7 +84,7 @@ public class SlenderSpawn : MonoBehaviour
         X = UnityEngine.Random.Range(Xmin,Xmax);
         Z = UnityEngine.Random.Range(Zmin,Zmax);
 
-        return new Vector3(X, 0, Z);
+        return new Vector3(X, -100, Z);
     }
 
 
