@@ -16,11 +16,18 @@ public class SlenderSpawn : MonoBehaviour
      */
 
     [SerializeField] private GameObject prefabSlender;
-    [SerializeField] private GameObject terrain;
+
+    [SerializeField]
+    private GameObject
+        terrain; // je prend mon gameobject plan pour reduir la taille de spawn( le terrain en lui meme est trop grand !)
+
+    [SerializeField] private LayerMask layerMask;
+
+    [SerializeField] private GameObject slenderGO;
 
     //[SerializeField]  nbObject 
 
-    [SerializeField] private float timer = 1f;
+    [SerializeField] private float timer = 15f;
     private float updatedTimer;
 
     private float Xmax;
@@ -30,13 +37,13 @@ public class SlenderSpawn : MonoBehaviour
     private float X;
     private float Z;
 
-    private TerrainCollider _terrainCollider;
-    
+    private Collider _terrainCollider;
+
 
     private void Awake()
     {
         updatedTimer = timer;
-        _terrainCollider = terrain.GetComponent<TerrainCollider>();
+        _terrainCollider = terrain.GetComponent<Collider>();
 
     }
 
@@ -57,38 +64,51 @@ public class SlenderSpawn : MonoBehaviour
     private void SlenderSpawnRaycast()
     {
         // choisi une pos sur le board
-        Vector3 newPos = RandomPos();
+        Vector3 newPos = RandomPos(); // genre ( 400, 0 , 345) 
         Debug.Log("new Pos SlenderPawn:" + newPos);
-        
+
         //on regarde si le slender peux spawn à cette pos, puis on le fait  spawn
         RaycastHit hit;
+        Debug.DrawRay(newPos, transform.up * 100, Color.red); // ok 
+        //Debug.Break();
+        // si il y a un slender, je le kill
 
-        if (Physics.Raycast(newPos, transform.up, out hit, 1000))
+        foreach (Transform child in slenderGO.transform)
         {
-            newPos = new Vector3(newPos.x, hit.transform.position.y + 2, newPos.z);
-            Debug.Log("Swpan Slender");
-            Instantiate(prefabSlender,newPos,Quaternion.identity);
+            Debug.Log("Destroy Child: " + child.gameObject);
+            Destroy(child.gameObject);
         }
-        
 
+        // je fait spawn un slender
+            if (Physics.Raycast(newPos, -transform.up, out hit, 100, layerMask, QueryTriggerInteraction.Ignore))
+            {
+                newPos = new Vector3(newPos.x, 7, newPos.z);
+                Debug.Log("Swpan Slender");
+                Instantiate(prefabSlender, newPos, Quaternion.identity, slenderGO.transform);
+            }
+            else
+            {
+                Debug.Log("Le rayCast marche pas feegdvdxr");
+            }
     }
+    
 
     private Vector3 RandomPos()
     {
-        Xmax = _terrainCollider.bounds.max.x;
-        Xmin = _terrainCollider.bounds.min.x;
-        
-        Zmax = _terrainCollider.bounds.max.z;
-        Zmin = _terrainCollider.bounds.min.z;
+        var bounds = _terrainCollider.bounds;
+        Xmax = bounds.max.x;
+        Xmin = bounds.min.x;
 
-        X = UnityEngine.Random.Range(Xmin,Xmax);
-        Z = UnityEngine.Random.Range(Zmin,Zmax);
+        Zmax = bounds.max.z;
+        Zmin = bounds.min.z;
 
-        return new Vector3(X, -100, Z);
+        X = UnityEngine.Random.Range(Xmin, Xmax);
+        Z = UnityEngine.Random.Range(Zmin, Zmax);
+
+        return new Vector3(X, 30, Z);
     }
-
-
 }
+    
 
 
 

@@ -8,8 +8,8 @@ public class debug: MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log(terrain.GetComponent<TerrainCollider>().bounds.max.x);
-        Debug.Log(terrain.GetComponent<TerrainCollider>().bounds.min.x);
+        Debug.Log(terrain.GetComponent<Collider>().bounds.max.x);
+        Debug.Log(terrain.GetComponent<Collider>().bounds.min.x);
     }
 
     // Update is called once per frame

@@ -5,8 +5,18 @@ using UnityEngine;
 
 public class resetPos : MonoBehaviour
 {
-    [SerializeField] private Transform transformPlayer;
+    [SerializeField] private LayerMask layerMask;
+    [SerializeField] private GameObject player;
+
+    private Vector3 transformPlayer;
+    
     // Start is called before the first frame update
+    
+    private void Update()
+    {
+        transformPlayer = player.transform.position;
+    }
+
     void OnCollisionEnter(Collision other)
     {
         if (other.transform.CompareTag("Respawn"))
@@ -14,13 +24,14 @@ public class resetPos : MonoBehaviour
             Debug.Log("PASSE SOUS LA CARTE");
 
             RaycastHit hit;
-
-            Debug.DrawRay(transform.position, transform.up * 100, Color.red);
-
-            if (Physics.Raycast(transform.position, transform.up, out hit, 100))
+            
+            if (Physics.Raycast(transformPlayer + transform.up*100,-transform.up,out hit,100,layerMask,QueryTriggerInteraction.Ignore))
             {
-                Debug.Log("Hit: " + hit);
-                transform.position = new Vector3(transform.position.x, hit.transform.position.y + 2, transform.position.z);
+                Debug.DrawRay(transformPlayer * 100,-transform.up *100, Color.red);
+                Debug.Log("Hit: " + hit.collider.name);
+                Debug.Log("TP a la Pos: " + hit.collider.transform.position); // y=  5 pourtout le terrain :( je met une valeur fixe qui va bien
+                transform.position = new Vector3(transformPlayer.x, hit.transform.position.y + 10, transformPlayer.z);
+                Debug.Log("TP");
             }
         }
     }
