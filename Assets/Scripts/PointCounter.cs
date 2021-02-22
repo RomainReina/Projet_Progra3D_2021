@@ -23,7 +23,7 @@ public class PointCounter : MonoBehaviour
         TMPCounter.text = "Objets touvés: " + Point;
         TMPCounter.color = Color.white;
         
-         // si je trouve 5 objets, je'ai fini et je vais sur la page de fin
+         // si je trouve 5 objets en enfant de 'parent', jai fini et je vais sur la page de fin
          if (Point == LimitPoint)
         {
             SceneManager.LoadScene(endingScene); // a faire

@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     private float yawn;
     private float pitch;
 
-
+    // player controlleur Copier collé du cours
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour
     private void JumpPlayer()
     {
         if(Input.GetButton("Jump"))
-            Debug.Log("jump");
+            Debug.Log("jump"); // ok 
     }
 
     private void MoveCamera()

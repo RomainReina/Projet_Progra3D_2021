@@ -9,8 +9,9 @@ public class SceneController : MonoBehaviour
     [SerializeField] private string nextScene;
     
 
-    public void SceneLoader() {
-        
+    public void SceneLoader() 
+    {
+        //on load la prochaine scene
         SceneManager.LoadScene(nextScene);
     }
 

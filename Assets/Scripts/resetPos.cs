@@ -24,7 +24,7 @@ public class resetPos : MonoBehaviour
             Debug.Log("PASSE SOUS LA CARTE");
 
             RaycastHit hit;
-            
+            // si je hit le layout respawn, je me fait tp un peut plus haut !
             if (Physics.Raycast(transformPlayer + transform.up*100,-transform.up,out hit,100,layerMask,QueryTriggerInteraction.Ignore))
             {
                 Debug.DrawRay(transformPlayer * 100,-transform.up *100, Color.red);

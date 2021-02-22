@@ -64,15 +64,15 @@ public class SlenderSpawn : MonoBehaviour
     private void SlenderSpawnRaycast()
     {
         // choisi une pos sur le board
-        Vector3 newPos = RandomPos(); // genre ( 400, 0 , 345) 
+        Vector3 newPos = RandomPos(); 
         Debug.Log("new Pos SlenderPawn:" + newPos);
 
         //on regarde si le slender peux spawn à cette pos, puis on le fait  spawn
         RaycastHit hit;
         Debug.DrawRay(newPos, transform.up * 100, Color.red); // ok 
         //Debug.Break();
+        
         // si il y a un slender, je le kill
-
         foreach (Transform child in slenderGO.transform)
         {
             Debug.Log("Destroy Child: " + child.gameObject);
@@ -95,13 +95,15 @@ public class SlenderSpawn : MonoBehaviour
 
     private Vector3 RandomPos()
     {
+        // prend les extremiter su plane en question 
         var bounds = _terrainCollider.bounds;
         Xmax = bounds.max.x;
         Xmin = bounds.min.x;
 
         Zmax = bounds.max.z;
         Zmin = bounds.min.z;
-
+        
+        // et randomise 2 valeurs
         X = UnityEngine.Random.Range(Xmin, Xmax);
         Z = UnityEngine.Random.Range(Zmin, Zmax);
 
