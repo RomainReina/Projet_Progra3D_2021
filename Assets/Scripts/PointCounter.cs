@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Projet;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -13,8 +14,17 @@ public class PointCounter : MonoBehaviour
     [SerializeField] private float LimitPoint=5;
     
     [SerializeField] private string endingScene;
-
     
+    [SerializeField] private DialogueClass wonDialogue;
+    [SerializeField] private DialogueClass lostDialogue;
+    [SerializeField] private DialogueClass nextDialogue;
+
+    private void Start()
+    {
+        // on set le prochain dialogue a 'lose' par defaut
+        nextDialogue.Dialogue = lostDialogue.Dialogue;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -23,10 +33,14 @@ public class PointCounter : MonoBehaviour
         TMPCounter.text = "Objets touvés: " + Point;
         TMPCounter.color = Color.white;
         
-         // si je trouve 5 objets en enfant de 'parent', jai fini et je vais sur la page de fin
+        // si je trouve 5 objets en enfant de 'parent', jai fini et je vais sur la page de fin
          if (Point == LimitPoint)
-        {
-            SceneManager.LoadScene(endingScene); // a faire
+         {
+             // si on gagne, on change de 'lose' a 'win'
+             nextDialogue.Dialogue = wonDialogue.Dialogue;
+             SceneManager.LoadScene(endingScene); 
+            
         }
+        
     }
 }

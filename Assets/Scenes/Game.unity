@@ -387,7 +387,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   slenderGO: {fileID: 1427701570}
-  timer: 15
+  timer: 5
 --- !u!114 &175568287
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -416,7 +416,10 @@ MonoBehaviour:
   parent: {fileID: 982431316}
   TMPCounter: {fileID: 684163519}
   LimitPoint: 5
-  endingScene: WonScene
+  endingScene: EndingScene
+  wonDialogue: {fileID: 11400000, guid: f80ea56efe93ff14498e019763cab902, type: 2}
+  lostDialogue: {fileID: 11400000, guid: 43a9c85ed8af6134587d1f981706f8e2, type: 2}
+  nextDialogue: {fileID: 11400000, guid: 669592fa13e13054284f36b4da2794c4, type: 2}
 --- !u!1001 &338195675
 PrefabInstance:
   m_ObjectHideFlags: 0

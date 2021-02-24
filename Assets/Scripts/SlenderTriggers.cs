@@ -6,13 +6,14 @@ using UnityEngine.SceneManagement;
 
 public class SlenderTriggers : MonoBehaviour
 {
+    [SerializeField] private string nextscene;
 
     private void OnTriggerEnter(Collider other)
     {
         // si le player est dans les environs, je met fin a la partie
         if (other.gameObject.layer == 7) // Layer = Player
         {
-            SceneManager.LoadScene("LostScene");
+            SceneManager.LoadScene(nextscene);
         }
     }
 }
